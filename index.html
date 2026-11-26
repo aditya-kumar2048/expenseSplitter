@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Keep shared group expenses organized and see who owes whom."
+    />
+    <title>Splitwise — Shared expenses, made simple</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Splitwise home">
+        <span class="brand-mark" aria-hidden="true">s</span>
+        <span>split<span class="brand-light">wise</span></span>
+      </a>
+      <div class="topbar-note">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>Your group, in balance</span>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="page-heading" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">YOUR SHARED SPACE</p>
+          <h1 id="page-title">Expense splitter</h1>
+          <p class="page-description">
+            Keep track of shared spending and settle up without the awkward math.
+          </p>
+        </div>
+        <button class="button button-quiet" id="reset-btn" type="button">
+          <span aria-hidden="true">↻</span>
+          Reset group
+        </button>
+      </section>
+
+      <div class="dashboard">
+        <aside class="sidebar">
+          <section class="panel members-panel" id="members-section" aria-labelledby="members-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">THE CREW</p>
+                <h2 id="members-heading">Group members</h2>
+              </div>
+              <span class="count-badge" id="member-count">0 / 10</span>
+            </div>
+
+            <div class="member-entry">
+              <label class="field-label" for="addMemeber">Add someone</label>
+              <div class="inline-field">
+                <input
+                  type="text"
+                  id="addMemeber"
+                  name="member"
+                  placeholder="e.g. Aditya"
+                  autocomplete="off"
+                  maxlength="40"
+                />
+                <button class="button button-primary button-add" id="Submit" type="button">
+                  Add
+                </button>
+              </div>
+              <p class="field-hint">Add 2–10 people to get started.</p>
+              <p class="error-message" id="member-error" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="member-list" id="showList" aria-live="polite">
+              <p class="empty-note">Your group members will show up here.</p>
+            </div>
+          </section>
+
+          <section class="panel add-expense-panel" id="expense-section" aria-labelledby="add-expense-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">ADD TO THE TAB</p>
+                <h2 id="add-expense-heading">New expense</h2>
+              </div>
+              <span class="heading-icon" aria-hidden="true">＋</span>
+            </div>
+
+            <div class="form-stack">
+              <div class="field">
+                <label class="field-label" for="reason">What was it for?</label>
+                <input
+                  type="text"
+                  id="reason"
+                  name="title"
+                  placeholder="e.g. Dinner, cab ride"
+                  maxlength="80"
+                />
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="amt">Amount</label>
+                <div class="amount-input">
+                  <span aria-hidden="true">₹</span>
+                  <input
+                    type="number"
+                    id="amt"
+                    name="amount"
+                    min="0.01"
+                    step="0.01"
+                    inputmode="decimal"
+                    placeholder="0.00"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="whoPaid">Paid by</label>
+                <select name="whoPaid" id="whoPaid">
+                  <option value="">Choose a member</option>
+                </select>
+              </div>
+
+              <fieldset class="field split-field">
+                <legend class="field-label">Split between</legend>
+                <p class="field-hint">Select everyone sharing this expense.</p>
+                <div class="split-members" id="memberList" aria-live="polite">
+                  <p class="empty-note">Add group members first.</p>
+                </div>
+              </fieldset>
+
+              <p class="error-message" id="expense-error" role="status" aria-live="polite"></p>
+              <button class="button button-primary button-wide" id="AddExpenses" type="button">
+                <span aria-hidden="true">＋</span>
+                Add expense
+              </button>
+            </div>
+          </section>
+        </aside>
+
+        <div class="content-column">
+          <section class="panel balances-panel" id="balances-section" aria-labelledby="balances-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">AT A GLANCE</p>
+                <h2 id="balances-heading">Balances</h2>
+              </div>
+              <span class="currency-note">All amounts in INR</span>
+            </div>
+
+            <div class="table-wrap">
+              <table class="balances-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Member</th>
+                    <th scope="col">Paid</th>
+                    <th scope="col">Share</th>
+                    <th scope="col">Net balance</th>
+                  </tr>
+                </thead>
+                <tbody id="balance-list">
+                  <tr class="table-empty-row">
+                    <td colspan="4">Add members and expenses to see balances.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="balance-footnote">
+              <span aria-hidden="true">ⓘ</span>
+              A positive balance means they’re owed; a negative one means they owe.
+            </p>
+          </section>
+
+          <section class="panel settlement-panel" id="settlement-section" aria-labelledby="settlement-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">THE EASY WAY OUT</p>
+                <h2 id="settlement-heading">Settle up</h2>
+              </div>
+              <span class="heading-icon heading-icon-green" aria-hidden="true">↗</span>
+            </div>
+            <div class="settlement-list" id="settlement-list" aria-live="polite">
+              <p class="empty-note">Add an expense to see who needs to pay whom.</p>
+            </div>
+          </section>
+
+          <section class="panel expenses-panel" id="expenses-section" aria-labelledby="expenses-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">THE PAPER TRAIL</p>
+                <h2 id="expenses-heading">Recent expenses</h2>
+              </div>
+              <span class="count-badge" id="expense-count">0 items</span>
+            </div>
+            <div class="expense-list" id="expense-list" aria-live="polite">
+              <div class="empty-state">
+                <span class="empty-state-icon" aria-hidden="true">☼</span>
+                <p class="empty-state-title">Nothing on the tab yet</p>
+                <p class="empty-note">Add your first expense and keep the group in sync.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>Good times, shared fairly.</span>
+      <span>Made for your group</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
