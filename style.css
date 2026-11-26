@@ -143,6 +143,16 @@ h1 {
   font-size: 13px;
 }
 
+.app-error {
+  margin: 0 0 16px;
+  padding: 11px 14px;
+  border: 1px solid #f0d2cb;
+  border-radius: 9px;
+  color: #a64c40;
+  background: #fff8f6;
+  font-size: 12px;
+}
+
 .button {
   min-height: 40px;
   display: inline-flex;
@@ -615,6 +625,12 @@ select:focus {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.expense-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .empty-state {
